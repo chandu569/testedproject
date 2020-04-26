@@ -1,0 +1,82 @@
+#!/bin/bash
+
+########MAINHUB RESOURCE GROUP#########
+echo "1. create resource group MAINHUB-RG"
+az group create -l eastus -n MAINHUB-RG
+
+echo "2.created vnet MAINHUB-RG-vnet1 location:eastus && one subnet 10 range" 
+az network vnet create -g MAINHUB-RG -n MAINHUB-RG-vNET1 --address-prefix 10.10.0.0/16 \
+--subnet-name MAINHUB-RG-Subnet-1 --subnet-prefix 10.10.1.0/24 -l eastus
+ 
+echo "3. network nsg MAINHUB-RG"
+az network nsg create -g MAINHUB-RG -n MAINHUB-RG_NSG1  
+
+echo "4.network nsg rule create -g MAINHUB-RG "
+az network nsg rule create -g MAINHUB-RG --nsg-name MAINHUB-RG_NSG1 -n MAINHUB-RG_NSG1_RULE1 --priority 100 \
+--source-address-prefixes '*' --source-port-ranges '*'  --destination-address-prefixes '*' \
+--destination-port-ranges '*' --access Allow  --protocol Tcp --description "Allowing All Traffic For Now"
+ 
+echo "5.availability-set create --name EAST-AVSET1"
+az vm availability-set create --name EAST-AVSET1 -g MAINHUB-RG --location eastus \
+--platform-fault-domain-count 3 --platform-update-domain-count 5
+ 
+echo "6.Creating Azure VM"
+az vm create --resource-group MAINHUB-RG --name MAINHUB-RGTestVM1 --image UbuntuLTS --vnet-name MAINHUB-RG-vNET1 \
+--subnet MAINHUB-RG-Subnet-1 --admin-username chandra --admin-password "chandrashekhar@1234" --size Standard_B1s \
+--availability-set EAST-AVSET1 --nsg MAINHUB-RG_NSG1
+
+
+###### CUST1 #######
+
+echo "7. create resource group CUST1-RG"
+az group create -l eastus -n CUST1-RG
+
+echo "8.created vnet CUST1-RG-vnet2 location:eastus && one subnet 172 range" 
+az network vnet create -g CUST1-RG -n CUST1-RG-vNET1 --address-prefix 172.16.0.0/16 \
+--subnet-name CUST1-RG-Subnet-1 --subnet-prefix 172.16.1.0/24 -l eastus
+ 
+echo "9. network nsg CUST1-RG"
+az network nsg create -g CUST1-RG -n CUST1-RG_NSG1  
+
+echo "10.network nsg rule create -g CUST1-RG "
+az network nsg rule create -g CUST1-RG --nsg-name CUST1-RG_NSG1 -n CUST1-RG_NSG1_RULE1 --priority 100 \
+--source-address-prefixes '*' --source-port-ranges '*'  --destination-address-prefixes '*' \
+--destination-port-ranges '*' --access Allow  --protocol Tcp --description "Allowing All Traffic For Now"
+ 
+echo "11.availability-set create --name EAST-AVSET1"
+az vm availability-set create --name EAST-AVSET1 -g CUST1-RG --location eastus \
+--platform-fault-domain-count 3 --platform-update-domain-count 5
+ 
+echo "12.Creating Azure VM"
+az vm create --resource-group CUST1-RG --name CUST1-RGTestVM1 --image UbuntuLTS --vnet-name CUST1-RG-vNET1 \
+--subnet CUST1-RG-Subnet-1 --admin-username chandra --admin-password "chandrashekhar@1234" --size Standard_B1s \
+--availability-set EAST-AVSET1 --nsg CUST1-RG_NSG1
+
+
+
+
+
+
+echo "13. create resource group CUST2-RG"
+az group create -l eastus -n CUST2-RG
+
+echo "14.created vnet CUST2-RG-vnet2 location:eastus && one subnet 172 range" 
+az network vnet create -g CUST2-RG -n CUST2-RG-vNET1 --address-prefix 172.17.0.0/16 \
+--subnet-name CUST2-RG-Subnet-1 --subnet-prefix 172.17.1.0/24 -l eastus
+ 
+echo "15. network nsg CUST2-RG"
+az network nsg create -g CUST2-RG -n CUST2-RG_NSG1  
+
+echo "16.network nsg rule create -g CUST2-RG "
+az network nsg rule create -g CUST2-RG --nsg-name CUST2-RG_NSG1 -n CUST2-RG_NSG1_RULE1 --priority 100 \
+--source-address-prefixes '*' --source-port-ranges '*'  --destination-address-prefixes '*' \
+--destination-port-ranges '*' --access Allow  --protocol Tcp --description "Allowing All Traffic For Now"
+ 
+echo "17.availability-set create --name EAST-AVSET1"
+az vm availability-set create --name EAST-AVSET1 -g CUST2-RG --location eastus \
+--platform-fault-domain-count 3 --platform-update-domain-count 5
+ 
+echo "18.Creating Azure VM"
+az vm create --resource-group CUST2-RG --name CUST2-RGTestVM1 --image UbuntuLTS --vnet-name CUST2-RG-vNET1 \
+--subnet CUST2-RG-Subnet-1 --admin-username chandra --admin-password "chandrashekhar@1234" --size Standard_B1s \
+--availability-set EAST-AVSET1 --nsg CUST2-RG_NSG1
