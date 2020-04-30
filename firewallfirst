@@ -22,7 +22,7 @@ az vm availability-set create --name EAST-AVSET1 -g MAINHUB-RG --location eastus
  
 echo "6.Creating Azure VM"
 az vm create --resource-group MAINHUB-RG --name MAINHUB-RGTestVM1 --image UbuntuLTS --vnet-name MAINHUB-RG-vNET1 \
---subnet MAINHUB-RG-Subnet-1 --admin-username chandra --admin-password "chandrashekhar@1234" --size Standard_B1s \
+--subnet MAINHUB-RG-Subnet-1 --admin-username chandra --admin-password "chandras@1234" --size Standard_B1s \
 --availability-set EAST-AVSET1 --nsg MAINHUB-RG_NSG1
 
 
@@ -49,7 +49,7 @@ az vm availability-set create --name EAST-AVSET1 -g CUST1-RG --location eastus \
  
 echo "12.Creating Azure VM"
 az vm create --resource-group CUST1-RG --name CUST1-RGTestVM1 --image UbuntuLTS --vnet-name CUST1-RG-vNET1 \
---subnet CUST1-RG-Subnet-1 --admin-username chandra --admin-password "chandrashekhar@1234" --size Standard_B1s \
+--subnet CUST1-RG-Subnet-1 --admin-username chandra --admin-password "chandrashekhar@12" --size Standard_B1s \
 --availability-set EAST-AVSET1 --nsg CUST1-RG_NSG1
 
 
@@ -78,5 +78,5 @@ az vm availability-set create --name EAST-AVSET1 -g CUST2-RG --location eastus \
  
 echo "18.Creating Azure VM"
 az vm create --resource-group CUST2-RG --name CUST2-RGTestVM1 --image UbuntuLTS --vnet-name CUST2-RG-vNET1 \
---subnet CUST2-RG-Subnet-1 --admin-username chandra --admin-password "chandrashekhar@1234" --size Standard_B1s \
+--subnet CUST2-RG-Subnet-1 --admin-username chandra --admin-password "chandrashekhar@12" --size Standard_B1s \
 --availability-set EAST-AVSET1 --nsg CUST2-RG_NSG1
